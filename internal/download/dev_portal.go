@@ -942,7 +942,7 @@ func (dp *DevPortal) storeSession() error {
 	}
 
 	var auth AppleAccountAuth
-	if err := json.Unmarshal(sess.Data, &auth); err != nil {
+	if err := json.Unmarshal(bytes.Trim(sess.Data, "\x00"), &auth); err != nil {
 		return fmt.Errorf("failed to unmarshal dev auth: %v", err)
 	}
 
@@ -981,7 +981,7 @@ func (dp *DevPortal) loadSession() error {
 	}
 
 	var auth AppleAccountAuth
-	if err := json.Unmarshal(sess.Data, &auth); err != nil {
+	if err := json.Unmarshal(bytes.Trim(sess.Data, "\x00"), &auth); err != nil {
 		return fmt.Errorf("failed to unmarshal dev auth: %v", err)
 	}
 
