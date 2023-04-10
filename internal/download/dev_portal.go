@@ -439,7 +439,7 @@ func (dp *DevPortal) Login(username, password string) error {
 			})
 		} else { // credentials found in vault
 			var auth AppleAccountAuth
-			if err := json.Unmarshal(creds.Data, &auth); err != nil {
+			if err := json.Unmarshal(bytes.Trim(creds.Data, "\x00"), &auth); err != nil {
 				return fmt.Errorf("failed to unmarshal keychain credentials: %v", err)
 			}
 			username = auth.Credentials.Username
